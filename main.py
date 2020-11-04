@@ -24,11 +24,21 @@ async def jsonGET(url: str):
     return (await GET(url)).json()
 
 def serverHTML(sdata, cdata):
-    return fr"""<html><head></head><body>
-        <h1 class="header">Should you play {cdata["Name"]}?</h1>
-        <div id="result"></div>
-        <div id="reason"></div>
-    </body></html>"""
+    return fr"""
+        <html><head>
+            <title>MPB players be like</title>
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="Should you play MPB Remastered?" />
+            <meta name="twitter:description" content="Let's find out" />
+            <meta name="twitter:image" content="//t4.rbxcdn.com/5e49e40ecc97314a8707e63fe175a5e2" />
+            <link rel="icon" href="//t3.rbxcdn.com/05d00cf38d53e7ebd502ae1acb56570c">
+            <link rel="stylesheet" href="playMPB.css">
+        </head><body>
+            <h1 class="header">Should you play {cdata["Name"]}?</h1>
+            <div id="result"></div>
+            <div id="reason"></div>
+        </body></html>
+    """
 
 serverErr = r"""
 <html><head></head><body>place does not exist</body></html>
