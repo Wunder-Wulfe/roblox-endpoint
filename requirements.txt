@@ -2,4 +2,5 @@ django
 uvicorn[standard]
 gunicorn
 django-heroku
+requests
 fastapi
