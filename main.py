@@ -1,3 +1,4 @@
+import requests
 from fastapi import FastAPI
 
 app = FastAPI(
@@ -5,12 +6,14 @@ app = FastAPI(
     description = "Unofficial hub for useful Roblox API interaction",
     openapi_tags = [
         {
-            "name": "pf",
-            "description": "Find server information for a place"
+            "name": "Servers",
+            "description": "Find server information for places"
         }
     ]
 )
 
-@app.get("/servers/{placeId}", tags = ["pf"])
+@app.get("/servers/{placeId}", tags = ["Servers"])
 async def find_place(placeId: int):
-    return {"test": placeId}
+    return requests.get(
+        f"https://games.roblox.com/v1/games/{placeId}/servers/Public"
+    )
