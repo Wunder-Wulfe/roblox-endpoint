@@ -1,4 +1,4 @@
-import requests
+import httpx
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -14,6 +14,8 @@ app = FastAPI(
 )
 
 
+client = httpx.AsyncClient()
+
 @app.get("/servers/{placeId}", tags = ["Servers"])
 async def find_place(placeId: int):
-    return f"https://games.roblox.com/v1/games/{placeId}/servers/Public"
+    return (await client.get(f"https://games.roblox.com/v1/games/{placeId}/servers/Public")).json()
