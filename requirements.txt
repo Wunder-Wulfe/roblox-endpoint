@@ -3,4 +3,5 @@ uvicorn[standard]
 gunicorn
 django-heroku
 requests
+aiofiles
 fastapi
