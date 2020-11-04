@@ -25,7 +25,7 @@ async def jsonGET(url: str):
 
 def serverHTML(sdata, cdata):
     return fr"""<html><head></head><body>
-        <h1 class="header">Should you play {cdata.Name}?</h1>
+        <h1 class="header">Should you play {cdata["Name"]}?</h1>
         <div id="result"></div>
         <div id="reason"></div>
     </body></html>"""
