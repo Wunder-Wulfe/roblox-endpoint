@@ -18,9 +18,9 @@ client = httpx.AsyncClient()
 
 async def GET(url: string):
     return client.get(url)
-async def textGET(url: string):
+async def textGET(url: str):
     return (await GET(url)).text
-async def jsonGET(url: string):
+async def jsonGET(url: str):
     return (await GET(url)).json()
 
 def serverHTML(sdata, cdata):
