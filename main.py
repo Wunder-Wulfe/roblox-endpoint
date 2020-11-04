@@ -1,12 +1,16 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(
+    title = "Roblox Endpoint",
+    description = "Unofficial hub for useful Roblox API interaction",
+    openapi_tags = [
+        {
+            "name": "pf",
+            "description": "Find server information for a place"
+        }
+    ]
+)
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@app.get("/servers/{placeId}")
-async def findPlace(placeId: int = 4953508391):
+@app.get("/servers/{placeId}", tags = ["pf"])
+async def find_place(placeId: int):
     return {"test": placeId}
