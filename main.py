@@ -42,5 +42,5 @@ async def server_data(placeId: int):
     else:
         return serverHTML(
             response, 
-            await jsonGET(fr"http://api.roblox.com/marketplace/productinfo?assetId={placeId}")
+            await jsonGET(fr"https://api.roblox.com/marketplace/productinfo?assetId={placeId}")
         )
