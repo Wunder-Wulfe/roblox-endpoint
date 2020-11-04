@@ -17,7 +17,7 @@ app = FastAPI(
 client = httpx.AsyncClient()
 
 async def GET(url: str):
-    return client.get(url)
+    return await client.get(url)
 async def textGET(url: str):
     return (await GET(url)).text
 async def jsonGET(url: str):
