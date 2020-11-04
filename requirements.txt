@@ -1,5 +1,5 @@
 django
-unicorn
+uvicorn
 gunicorn
 django-heroku
 fastapi
