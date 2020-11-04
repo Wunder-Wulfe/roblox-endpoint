@@ -23,7 +23,7 @@ async def textGET(url: string):
 async def jsonGET(url: string):
     return (await GET(url)).json()
 
-def serverHTML(sdata, cdata)
+def serverHTML(sdata, cdata):
     return fr"""<html><head></head><body>
         <h1 class="header">Should you play {cdata.Name}?</h1>
         <div id="result"></div>
