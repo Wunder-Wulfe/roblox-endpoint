@@ -5,4 +5,4 @@ django-heroku
 httpx
 aiofiles
 fastapi
-Jinja
+jinja2

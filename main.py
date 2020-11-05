@@ -34,8 +34,8 @@ def serverHTML(sdata, cdata, tdata, idata):
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
-		tdata = tdata,
-		idata = idata
+		tdata = tdata.data[0],
+		idata = idata.data[0]
 	)
 
 serverErr = r"""
