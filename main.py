@@ -2,6 +2,7 @@ import httpx
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import *
+from jinja2 import Environment, FileSystemLoader
 
 app = FastAPI(
     title = "Roblox Endpoint",
@@ -24,22 +25,18 @@ async def textGET(url: str):
 async def jsonGET(url: str):
     return (await GET(url)).json()
 
+file_loader = FileSystemLoader("templates")
+env = Environment(loader=file_loader)
+
+template = env.get_template("serverHTML.html")
+
 def serverHTML(sdata, cdata, tdata, idata):
-    return fr"""
-        <html><head>
-            <title>{cdata["Name"]} players be like</title>
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content="Should you play {cdata["Name"]}?" />
-            <meta name="twitter:description" content="Let's find out" />
-            <meta name="twitter:image" content="{tdata.data[0].imageUrl}" />
-            <link rel="icon" href="{idata.data[0].imageUrl}">
-            <link rel="stylesheet" href="/serverCSS.css">
-        </head><body>
-            <h1 class="header">Should you play {cdata["Name"]}?</h1>
-            <div id="result"></div>
-            <div id="reason"></div>
-        </body></html>
-    """
+    return template.render(
+		sdata = sdata,
+		cdata = cdata,
+		tdata = tdata,
+		idata = idata
+	)
 
 serverErr = r"""
 <html><head></head><body>place does not exist</body></html>
