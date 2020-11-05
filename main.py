@@ -30,12 +30,36 @@ env = Environment(loader=file_loader)
 
 template = env.get_template("serverHTML.html")
 
+def getResult(sdata):
+	if len(sdata['data']) == 0:
+		return ('alert', 'No.', 'Nobody is playing this game')
+	else:
+		servers = sdata['data']
+		maxPlayers = max(server['playing'] for server in servers)
+		plLimit = max(server['maxPlayers'] for server in servers)
+		if min(server['ping'] for server in servers) > 350:
+			return ('alert', 'No.', 'All servers have awful ping')
+		elif min(server['fps'] for server in servers) < 11:
+			return ('alert', 'No.', 'All servers have awful framerates')
+		elif plLimit > 5:
+			if maxPlayers == 1
+				return ('alert', 'No.', 'Theres only one person per server')
+			elif maxPlayers == 2:
+				return ('warn', 'Maybe?', 'Looks like theres 1 v 1s going on')
+			elif maxPlayers < 5:
+				return ('warn', 'Maybe?', 'There are only a few people playing per server')
+		return ('success', 'Sure.', 'There are quite a few players')
+
 def serverHTML(sdata, cdata, tdata, idata):
+	resultClass, result, reason = getResult(sdata)
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
 		tdata = tdata['data'][0],
-		idata = idata['data'][0]
+		idata = idata['data'][0],
+		resultClass = resultClass,
+		result = result,
+		reason = reason
 	)
 
 serverErr = r"""

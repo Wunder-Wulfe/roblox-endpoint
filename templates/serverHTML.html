@@ -1,14 +1,15 @@
 <html><head>
-	<title>{{cdata['Name']}} players be like</title>
+	<title>{{ cdata['Name'] }} players be like</title>
 	<meta name="theme-color" content="#0062B3">
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Should you play {{cdata['Name']}}?" />
+	<meta name="twitter:title" content="Should you play {{ cdata['Name'] }}?" />
 	<meta name="twitter:description" content="Let's find out" />
-	<meta name="twitter:image" content="{{tdata['imageUrl']}}" />
-	<link rel="icon" href="{{idata['imageUrl']}}">
+	<meta name="twitter:image" content="{{ tdata['imageUrl'] }}" />
+	<link rel="icon" href="{{ idata['imageUrl'] }}">
 	<link rel="stylesheet" href="/serverCSS.css">
 </head><body>
+	<br />
 	<h1 class="header">Should you play {{cdata['Name']}}?</h1>
-	<div id="result"></div>
-	<div id="reason"></div>
+	<div id="result" class="{{ resultClass }}">{{ result }}</div>
+	<div id="reason">{{ reason }}</div>
 </body></html>
