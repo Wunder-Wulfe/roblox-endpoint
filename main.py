@@ -31,6 +31,7 @@ env = Environment(loader=file_loader)
 template = env.get_template("serverHTML.html")
 
 def serverHTML(sdata, cdata, tdata, idata):
+	print(idata)
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
