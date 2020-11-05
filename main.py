@@ -44,16 +44,16 @@ serverErr = r"""
 
 @app.get("/servers/{placeId}", tags = ["Servers"], response_class = HTMLResponse)
 async def server_data(placeId: int):
-	response = await jsonGET(fr"//games.roblox.com/v1/games/{placeId}/servers/Public")
+	response = await jsonGET(fr"https://games.roblox.com/v1/games/{placeId}/servers/Public")
 	if "errors" in response:
 		return serverErr
 	else:
-		productInfo = await jsonGET(fr"//api.roblox.com/marketplace/productinfo?assetId={placeId}")
+		productInfo = await jsonGET(fr"https://api.roblox.com/marketplace/productinfo?assetId={placeId}")
 		return serverHTML(
 			response, 
 			productInfo,
-			await jsonGET(fr"//thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432"),
-			await jsonGET(fr"//thumbnails.roblox.com/v1/assets?assetIds={productInfo.IconImageAssetId}&size=50x50&isCircular=true")
+			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432"),
+			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo.IconImageAssetId}&size=50x50&isCircular=true")
 		)
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
