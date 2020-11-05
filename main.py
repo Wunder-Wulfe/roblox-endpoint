@@ -56,7 +56,7 @@ def serverHTML(sdata, cdata, tdata, idata):
 		sdata = sdata,
 		cdata = cdata,
 		tdata = tdata['data'][0],
-		idata = idata['data'][0],
+		idata = len(idata['data']) > 0 ? idata['data'][0] : "",
 		resultClass = resultClass,
 		result = result,
 		reason = reason
