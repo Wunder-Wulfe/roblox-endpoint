@@ -31,7 +31,6 @@ env = Environment(loader=file_loader)
 template = env.get_template("serverHTML.html")
 
 def serverHTML(sdata, cdata, tdata, idata):
-	print(idata)
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
@@ -53,8 +52,8 @@ async def server_data(placeId: int):
 		return serverHTML(
 			response, 
 			productInfo,
-			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432"),
-			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&isCircular=true")
+			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432&format=Png"),
+			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&format=Png&isCircular=true")
 		)
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
