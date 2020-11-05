@@ -42,7 +42,7 @@ def getResult(sdata):
 		elif min(server['fps'] for server in servers) < 11:
 			return ('alert', 'No.', 'All servers have awful framerates')
 		elif plLimit > 5:
-			if maxPlayers == 1
+			if maxPlayers == 1:
 				return ('alert', 'No.', 'Theres only one person per server')
 			elif maxPlayers == 2:
 				return ('warn', 'Maybe?', 'Looks like theres 1 v 1s going on')
