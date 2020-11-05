@@ -34,8 +34,8 @@ def serverHTML(sdata, cdata, tdata, idata):
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
-		tdata = tdata.data[0],
-		idata = idata.data[0]
+		tdata = tdata['data'][0],
+		idata = idata['data'][0]
 	)
 
 serverErr = r"""
@@ -53,7 +53,7 @@ async def server_data(placeId: int):
 			response, 
 			productInfo,
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432"),
-			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo.IconImageAssetId}&size=50x50&isCircular=true")
+			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&isCircular=true")
 		)
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
