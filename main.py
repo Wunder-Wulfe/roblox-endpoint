@@ -33,7 +33,7 @@ def serverHTML(sdata, cdata):
             <meta name="twitter:description" content="Let's find out" />
             <meta name="twitter:image" content="//t4.rbxcdn.com/5e49e40ecc97314a8707e63fe175a5e2" />
             <link rel="icon" href="//t3.rbxcdn.com/05d00cf38d53e7ebd502ae1acb56570c">
-            <link rel="stylesheet" href="serverCSS.css">
+            <link rel="stylesheet" href="/serverCSS.css">
         </head><body>
             <h1 class="header">Should you play {cdata["Name"]}?</h1>
             <div id="result"></div>
