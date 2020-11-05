@@ -1,0 +1,45 @@
+@keyframes loadIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+* {
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+.header {
+  font-size: 3.25em;
+  animation: loadIn 1.5s ease-in-out both;
+}
+
+#result {
+  font-size: 2.25em;
+  animation: loadIn 1.8s 2.2s ease-in-out both;
+}
+
+#reason {
+  font-size: 2.25em;
+  animation: loadIn 1.8s 2.5s ease-in-out both;
+}
+
+.warn, .alert, .success {
+  font-weight: bold; 
+  font-size: 2.5em;
+}
+
+.warn {
+  color: rgb(200, 200, 0);
+}
+
+.alert {
+  color: rgb(200, 0, 0);
+}
+
+.success {
+  color: rgb(0, 200, 0);
+}
