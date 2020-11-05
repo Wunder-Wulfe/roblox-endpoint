@@ -55,8 +55,8 @@ def serverHTML(sdata, cdata, tdata, idata):
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
-		tdata = tdata['data'][0],
-		idata = len(idata['data']) > 0 ? idata['data'][0] : "",
+		tdata = tdata['data'][0]['imageUrl'] if len(tdata['data']) > 0 else "",
+		idata = idata['data'][0]['imageUrl'] if len(idata['data']) > 0 else "",
 		resultClass = resultClass,
 		result = result,
 		reason = reason
