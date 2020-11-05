@@ -24,15 +24,15 @@ async def textGET(url: str):
 async def jsonGET(url: str):
     return (await GET(url)).json()
 
-def serverHTML(sdata, cdata):
+def serverHTML(sdata, cdata, tdata, idata):
     return fr"""
         <html><head>
-            <title>MPB players be like</title>
+            <title>{cdata["Name"]} players be like</title>
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content="Should you play MPB Remastered?" />
+            <meta name="twitter:title" content="Should you play {cdata["Name"]}?" />
             <meta name="twitter:description" content="Let's find out" />
-            <meta name="twitter:image" content="//t4.rbxcdn.com/5e49e40ecc97314a8707e63fe175a5e2" />
-            <link rel="icon" href="//t3.rbxcdn.com/05d00cf38d53e7ebd502ae1acb56570c">
+            <meta name="twitter:image" content="{tdata.data[0].imageUrl}" />
+            <link rel="icon" href="{idata.data[0].imageUrl}">
             <link rel="stylesheet" href="/serverCSS.css">
         </head><body>
             <h1 class="header">Should you play {cdata["Name"]}?</h1>
@@ -47,13 +47,16 @@ serverErr = r"""
 
 @app.get("/servers/{placeId}", tags = ["Servers"], response_class = HTMLResponse)
 async def server_data(placeId: int):
-    response = await jsonGET(fr"https://games.roblox.com/v1/games/{placeId}/servers/Public")
+    response = await jsonGET(fr"//games.roblox.com/v1/games/{placeId}/servers/Public")
     if "errors" in response:
         return serverErr
     else:
+		productInfo = await jsonGET(fr"//api.roblox.com/marketplace/productinfo?assetId={placeId}")
         return serverHTML(
             response, 
-            await jsonGET(fr"https://api.roblox.com/marketplace/productinfo?assetId={placeId}")
+            productInfo,
+			await jsonGET(fr"//thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432"),
+			await jsonGET(fr"//thumbnails.roblox.com/v1/assets?assetIds={productInfo.IconImageAssetId}&size=110x110&isCircular=true")
         )
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
