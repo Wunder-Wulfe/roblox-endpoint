@@ -1,5 +1,6 @@
 import httpx
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import *
 
 app = FastAPI(
@@ -54,3 +55,5 @@ async def server_data(placeId: int):
             response, 
             await jsonGET(fr"https://api.roblox.com/marketplace/productinfo?assetId={placeId}")
         )
+
+app.mount("/", StaticFiles(directory="public_html"), name="static")
