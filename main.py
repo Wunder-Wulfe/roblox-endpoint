@@ -39,7 +39,7 @@ def rating(voteR):
 		return ('alert', 'No.', 'This game has a terrible rating')
 	elif voteR < 0.82:
 		return ('warn', 'Maybe?', 'This game has a decent rating')
-	else 
+	else:
 		return ('success', 'Sure.', 'This game has a good rating')
 
 def getResult(sdata, sweats: [int], voteR):
