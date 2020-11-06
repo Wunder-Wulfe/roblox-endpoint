@@ -1,6 +1,6 @@
 import httpx
 from typing import List, Optional
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Path, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import *
 from jinja2 import Environment, FileSystemLoader
@@ -83,7 +83,7 @@ serverErr = r"""
 
 @app.get("/servers/{placeId}", tags = ["Servers"], response_class = HTMLResponse)
 async def server_data(
-		placeId: int = Query(
+		placeId: int = Path(
 			5881457140, 
 			title = "Place ID",
 			description = "The place you wish to get the data for", 
