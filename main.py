@@ -1,4 +1,5 @@
 import httpx
+from typing import List, Optional
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import *
@@ -81,7 +82,7 @@ serverErr = r"""
 """
 
 @app.get("/servers/{placeId}", tags = ["Servers"], response_class = HTMLResponse)
-async def server_data(placeId: int, sweats: [int] = []):
+async def server_data(placeId: int, sweats: Optional[List[int]] = []):
 	response = await jsonGET(fr"https://games.roblox.com/v1/games/{placeId}/servers/Public")
 	if "errors" in response:
 		return serverErr
