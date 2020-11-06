@@ -68,7 +68,7 @@ def getResult(sdata, sweats: [int], voteR):
 			return ('alert', 'No.', 'All servers have awful ping')
 		elif min(server['fps'] for server in servers) < 11:
 			return ('alert', 'No.', 'All servers have awful framerates')
-		elif plLimit > 5:
+		elif plLimit > 6:
 			sweatInMax = sweatCount(maxPlayerServer, sweats)
 			if maxPlayers == 1:
 				return ('alert', 'No.', 'Theres only one person per server')
@@ -78,7 +78,7 @@ def getResult(sdata, sweats: [int], voteR):
 				return ('alert', 'No.', 'Everyone in the biggest server is sweating')
 			elif sweatInMax > 0:
 				return ('warn', 'Maybe?', 'There are some sweats online')
-			elif maxPlayers < 5:
+			elif maxPlayers < 6:
 				return ('warn', 'Maybe?', 'There are only a few people playing per server')
 				
 		if voteR is not None:
