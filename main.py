@@ -45,7 +45,7 @@ def rating(voteR: float)
 def getResult(sdata, sweats: [int], voteR):
 	if len(sdata['data']) == 0:
 		if voteR is not None:
-			rating(voteR)
+			return rating(voteR)
 		else:
 			return ('alert', 'No.', 'Nobody is playing this game')
 	else:
@@ -75,7 +75,7 @@ def getResult(sdata, sweats: [int], voteR):
 			elif maxPlayers < 5:
 				return ('warn', 'Maybe?', 'There are only a few people playing per server')
 		if voteR is not None:
-			rating(voteR)
+			return rating(voteR)
 		else:
 			return ('success', 'Sure.', 'There are quite a few players')
 
