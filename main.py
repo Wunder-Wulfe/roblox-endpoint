@@ -35,7 +35,9 @@ def sweatCount(server, sweats: [int]):
 	return sum(player in sweats for player in server['playerIds'])
 
 def rating(voteR):
-	if voteR < 0.59:
+	if voteR < 0.31:
+		return ('alert', 'No.', 'What the fuck is this')
+	elif voteR < 0.59:
 		return ('alert', 'No.', 'This game has a terrible rating')
 	elif voteR < 0.82:
 		return ('warn', 'Maybe?', 'This game has a decent rating')
@@ -49,6 +51,8 @@ def getResult(sdata, sweats: [int], voteR):
 		else:
 			return ('alert', 'No.', 'Nobody is playing this game')
 	else:
+		if voteR < 0.59:
+			return rating(voteR)
 		servers = sdata['data']
 		maxPlayerServer = None
 		maxPlayers = 0
