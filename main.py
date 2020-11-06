@@ -106,7 +106,7 @@ async def server_data(
 			productInfo,
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432&format=Png"),
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&format=Png&isCircular=true"),
-			sweats
+			sweat
 		)
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
