@@ -1,6 +1,6 @@
 import httpx
 from typing import List, Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import *
 from jinja2 import Environment, FileSystemLoader
@@ -82,7 +82,20 @@ serverErr = r"""
 """
 
 @app.get("/servers/{placeId}", tags = ["Servers"], response_class = HTMLResponse)
-async def server_data(placeId: int, sweats: Optional[List[int]] = []):
+async def server_data(
+		placeId: int = Query(
+			5881457140, 
+			title = "Place ID",
+			description = "The place you wish to get the data for", 
+			example = 5881457140
+		), 
+		sweats: Optional[List[int]] = Query(
+			[], 
+			title = "Sweats",
+			description = "A list of players you hate playing with", 
+			example = [161815003]
+		)
+	):
 	response = await jsonGET(fr"https://games.roblox.com/v1/games/{placeId}/servers/Public")
 	if "errors" in response:
 		return serverErr
@@ -92,7 +105,8 @@ async def server_data(placeId: int, sweats: Optional[List[int]] = []):
 			response, 
 			productInfo,
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432&format=Png"),
-			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&format=Png&isCircular=true")
+			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&format=Png&isCircular=true"),
+			sweats
 		)
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
