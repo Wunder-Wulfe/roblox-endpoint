@@ -47,7 +47,7 @@ def getResult(sdata, sweats: [int]):
 				maxPlayerServer = server
 				maxPlayers = server['playing']
 		plLimit = max(server['maxPlayers'] for server in servers)
-		if min(server['ping'] for server in servers) > 350:
+		if min(server['ping'] for server in servers) > 500:
 			return ('alert', 'No.', 'All servers have awful ping')
 		elif min(server['fps'] for server in servers) < 11:
 			return ('alert', 'No.', 'All servers have awful framerates')
@@ -89,10 +89,10 @@ async def server_data(
 			description = "The place you wish to get the data for", 
 			example = 5881457140
 		), 
-		sweats: Optional[List[int]] = Query(
+		sweat: Optional[List[int]] = Query(
 			[], 
-			title = "Sweats",
-			description = "A list of players you hate playing with", 
+			title = "Sweat",
+			description = "A player you hate playing with", 
 			example = [161815003]
 		)
 	):
