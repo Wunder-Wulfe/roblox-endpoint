@@ -53,6 +53,7 @@ def getResult(sdata, sweats: [int], voteR):
 	else:
 		if voteR is not None and voteR < 0.59:
 			return rating(voteR)
+			
 		servers = sdata['data']
 		maxPlayerServer = None
 		maxPlayers = 0
@@ -62,6 +63,7 @@ def getResult(sdata, sweats: [int], voteR):
 				maxPlayerServer = server
 				maxPlayers = server['playing']
 		plLimit = max(server['maxPlayers'] for server in servers)
+		
 		if min(server['ping'] for server in servers) > 500:
 			return ('alert', 'No.', 'All servers have awful ping')
 		elif min(server['fps'] for server in servers) < 11:
@@ -78,6 +80,7 @@ def getResult(sdata, sweats: [int], voteR):
 				return ('warn', 'Maybe?', 'There are some sweats online')
 			elif maxPlayers < 5:
 				return ('warn', 'Maybe?', 'There are only a few people playing per server')
+				
 		if voteR is not None:
 			return rating(voteR)
 		else:
