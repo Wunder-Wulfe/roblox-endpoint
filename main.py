@@ -51,7 +51,7 @@ def getResult(sdata, sweats: [int], voteR):
 		else:
 			return ('alert', 'No.', 'Nobody is playing this game')
 	else:
-		if voteR < 0.59:
+		if voteR is not None and voteR < 0.59:
 			return rating(voteR)
 		servers = sdata['data']
 		maxPlayerServer = None
