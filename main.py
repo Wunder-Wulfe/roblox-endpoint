@@ -115,8 +115,8 @@ async def server_data(
 		return serverErr
 	else:
 		productInfo = await jsonGET(fr"https://api.roblox.com/marketplace/productinfo?assetId={placeId}")
-		details = await jsonGET(fr"https://games.roblox.com/v1/games/multiget-place-details?placeIds={placeId}")
-		votes = await jsonGET(fr"https://games.roblox.com/v1/games/{details[0]['universeId']}/votes")
+		details = await jsonGET(fr"https://api.roblox.com/universes/get-universe-containing-place?placeid={placeid}")
+		votes = await jsonGET(fr"https://games.roblox.com/v1/games/{details['UniverseId']}/votes")
 		voteTotal = votes['downVotes'] + votes['upVotes']
 		if voteTotal == 0:
 			voteRatio = None
