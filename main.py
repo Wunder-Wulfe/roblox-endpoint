@@ -34,7 +34,7 @@ template = env.get_template("serverHTML.html")
 def sweatCount(server, sweats: [int]):
 	return sum(player in sweats for player in server['playerIds'])
 
-def rating(voteR: float)
+def rating(voteR)
 	if voteR < 0.59:
 		return ('alert', 'No.', 'This game has a terrible rating')
 	elif voteR < 0.82:
