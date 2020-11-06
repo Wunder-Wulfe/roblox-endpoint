@@ -86,7 +86,7 @@ def getResult(sdata, sweats: [int], voteR):
 		else:
 			return ('success', 'Sure.', 'There are quite a few players')
 
-def serverHTML(sdata, cdata, tdata, idata, sweats: [int], voteR):
+def serverHTML(sdata, cdata, tdata, idata, sweats: [int], placeId: int, voteR):
 	resultClass, result, reason = getResult(sdata, sweats, voteR)
 	return template.render(
 		sdata = sdata,
@@ -95,7 +95,8 @@ def serverHTML(sdata, cdata, tdata, idata, sweats: [int], voteR):
 		idata = idata['data'][0]['imageUrl'] if len(idata['data']) > 0 else "",
 		resultClass = resultClass,
 		result = result,
-		reason = reason
+		reason = reason,
+		placeId = placeId
 	)
 
 serverErr = r"""
@@ -135,6 +136,7 @@ async def server_data(
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432&format=Png"),
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&format=Png&isCircular=true"),
 			sweat,
+			placeId,
 			voteRatio
 		)
 
