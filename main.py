@@ -34,7 +34,7 @@ template = env.get_template("serverHTML.html")
 def sweatCount(server, sweats: [int]):
 	return sum(player in sweats for player in server['playerIds'])
 
-def getResult(sdata):
+def getResult(sdata, sweats: [int]):
 	if len(sdata['data']) == 0:
 		return ('alert', 'No.', 'Nobody is playing this game')
 	else:
@@ -52,7 +52,7 @@ def getResult(sdata):
 		elif min(server['fps'] for server in servers) < 11:
 			return ('alert', 'No.', 'All servers have awful framerates')
 		elif plLimit > 5:
-			sweatInMax = sweatCount(maxPlayerServer)
+			sweatInMax = sweatCount(maxPlayerServer, sweats)
 			if maxPlayers == 1:
 				return ('alert', 'No.', 'Theres only one person per server')
 			elif maxPlayers == 2:
@@ -65,8 +65,8 @@ def getResult(sdata):
 				return ('warn', 'Maybe?', 'There are only a few people playing per server')
 		return ('success', 'Sure.', 'There are quite a few players')
 
-def serverHTML(sdata, cdata, tdata, idata):
-	resultClass, result, reason = getResult(sdata)
+def serverHTML(sdata, cdata, tdata, idata, sweats: [int]):
+	resultClass, result, reason = getResult(sdata, sweats)
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
