@@ -34,9 +34,20 @@ template = env.get_template("serverHTML.html")
 def sweatCount(server, sweats: [int]):
 	return sum(player in sweats for player in server['playerIds'])
 
-def getResult(sdata, sweats: [int]):
+def rating(voteR: float)
+	if voteR < 0.59:
+		return ('alert', 'No.', 'This game has a terrible rating')
+	elif voteR < 0.82:
+		return ('warn', 'Maybe?', 'This game has a decent rating')
+	else 
+		return ('success', 'Sure.', 'This game has a good rating')
+
+def getResult(sdata, sweats: [int], voteR):
 	if len(sdata['data']) == 0:
-		return ('alert', 'No.', 'Nobody is playing this game')
+		if voteR is not None:
+			rating(voteR)
+		else:
+			return ('alert', 'No.', 'Nobody is playing this game')
 	else:
 		servers = sdata['data']
 		maxPlayerServer = None
@@ -63,10 +74,13 @@ def getResult(sdata, sweats: [int]):
 				return ('warn', 'Maybe?', 'There are some sweats online')
 			elif maxPlayers < 5:
 				return ('warn', 'Maybe?', 'There are only a few people playing per server')
-		return ('success', 'Sure.', 'There are quite a few players')
+		if voteR is not None:
+			rating(voteR)
+		else:
+			return ('success', 'Sure.', 'There are quite a few players')
 
-def serverHTML(sdata, cdata, tdata, idata, sweats: [int]):
-	resultClass, result, reason = getResult(sdata, sweats)
+def serverHTML(sdata, cdata, tdata, idata, sweats: [int], voteR):
+	resultClass, result, reason = getResult(sdata, sweats, voteR)
 	return template.render(
 		sdata = sdata,
 		cdata = cdata,
@@ -101,12 +115,20 @@ async def server_data(
 		return serverErr
 	else:
 		productInfo = await jsonGET(fr"https://api.roblox.com/marketplace/productinfo?assetId={placeId}")
+		details = await jsonGET(fr"https://games.roblox.com/v1/games/multiget-place-details?placeIds={placeId}")
+		votes = await jsonGET(fr"https://games.roblox.com/v1/games/{details[0]['universeId']}/votes")
+		voteTotal = votes['downVotes'] + votes['upVotes']
+		if voteTotal == 0:
+			voteRatio = None
+		else:
+			voteRatio = votes['upVotes'] / voteTotal
 		return serverHTML(
 			response, 
 			productInfo,
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={placeId}&size=768x432&format=Png"),
 			await jsonGET(fr"https://thumbnails.roblox.com/v1/assets?assetIds={productInfo['IconImageAssetId']}&size=50x50&format=Png&isCircular=true"),
-			sweat
+			sweat,
+			voteRatio
 		)
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
