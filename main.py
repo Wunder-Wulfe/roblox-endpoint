@@ -200,7 +200,7 @@ async def search_sign(
 	elif website == SITES.handspeak:
 		firstPage = fr"https://www.handspeak.com/word/search/app/app-dictionary.php"
 		firstResult = BeautifulSoup(
-			await textPOST(page, {"query": query}),
+			await textPOST(firstPage, {"query": query}),
 			'html.parser'
 		)
 		source = result.find("a")
