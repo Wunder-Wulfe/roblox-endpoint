@@ -147,10 +147,9 @@ async def server_data(
 def escape_string(string: str):
 	return string.replace("'", r"\'").replace('"',r'\"')
 def encode_hex(string: str):
-	return "%%%02X" % str.group(0)
-rcmp = re.compile("\\W")
+	return "%%%02X" % string.group(0)
 def escape_query(string: str):
-	return rcmp.sub(encode_hex, str)
+	return re.sub(r"\W", encode_hex, string)
 
 searchErr = r"""
 <html><head></head><body>no sign was found</body></html>
