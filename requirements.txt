@@ -6,5 +6,4 @@ httpx
 aiofiles
 fastapi
 beautifulsoup4
-urllib
 jinja2
