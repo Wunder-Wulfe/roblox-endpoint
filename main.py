@@ -203,7 +203,7 @@ async def search_sign(
 			await textPOST(firstPage, {"query": query}),
 			'html.parser'
 		)
-		source = result.find("a")
+		source = firstResult.find("a")
 		if source is not None:
 			url = source["href"]
 			secondPage = "https://www.handspeak.com" + url
@@ -213,10 +213,10 @@ async def search_sign(
 			)
 			if secondResult is not None:
 				video_url = secondResult.find("video")["src"]
-				mean = desc.find_all("p")[1].text
+				mean = secondResult.find_all("p")[1].text
 				return searchTemplate.render(
 					website = "HandSpeak",
-					url = page,
+					url = secondPage,
 					sign = escape_string(query).upper(),
 					video = "https://www.handspeak.com" + video_url,
 					meaning = mean,
