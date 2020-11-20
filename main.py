@@ -145,6 +145,10 @@ async def server_data(
 		
 def escape_string(string: str):
 	return string.replace("'", r"\'").replace('"',r'\"')
+def encode_hex(string: str):
+	return "%%%02X" % str
+def escape_query(string: str):
+	return re.sub(r"\W", encode_hex, str)
 
 searchErr = r"""
 <html><head></head><body>no sign was found</body></html>
@@ -168,7 +172,7 @@ async def search_sign(
 		)
 	):
 	if website == SITES.signsavvy:
-		page = fr"https://www.signingsavvy.com/search/{urllib.parse(query)}"
+		page = fr"https://www.signingsavvy.com/search/{escape_query(query)}"
 		result = BeautifulSoup(
 			textGET(page),
 			'html.parser'
