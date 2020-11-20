@@ -194,7 +194,7 @@ async def search_sign(
 					url = page,
 					sign = escape_string(query).upper(),
 					video = "https://www.signingsavvy.com/" + url,
-					meaning = mean,
+					meaning = escape_string(mean),
 					icon = "https://www.signingsavvy.com/favicon.ico"
 				)
 	elif website == SITES.handspeak:
