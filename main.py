@@ -27,6 +27,8 @@ async def GET(url: str):
 	return await client.get(url)
 async def textGET(url: str):
 	return (await GET(url)).text
+async def textPOST(url: str, data):
+	return (await client.post(url, data = data)).text
 async def jsonGET(url: str):
 	return (await GET(url)).json()
 
@@ -159,6 +161,7 @@ class SITES(str, Enum):
     signsavvy = "signsavvy"
     handspeak = "handspeak"
 searchTemplate = env.get_template("search.html")
+
 @app.get("/sign/{website}", response_class = HTMLResponse)
 async def search_sign(
 		website: SITES = Path(
@@ -190,7 +193,34 @@ async def search_sign(
 					website = "SignSavvy",
 					url = page,
 					sign = escape_string(query).upper(),
-					video = url
+					video = "https://www.signingsavvy.com/" + url,
+					meaning = mean,
+					icon = "https://www.signingsavvy.com/favicon.ico"
+				)
+	elif website == SITES.handspeak:
+		firstPage = fr"https://www.handspeak.com/word/search/app/app-dictionary.php"
+		firstResult = BeautifulSoup(
+			await textPOST(page, {"query": query}),
+			'html.parser'
+		)
+		source = result.find("a")
+		if source is not None:
+			url = source["href"]
+			secondPage = "https://www.handspeak.com" + url
+			secondResult = BeautifulSoup(
+				await textGET(secondPage),
+				'html.parser'
+			)
+			if secondResult is not None:
+				video_url = secondResult.find("video")["src"]
+				mean = desc.find_all("p")[1].text
+				return searchTemplate.render(
+					website = "HandSpeak",
+					url = page,
+					sign = escape_string(query).upper(),
+					video = "https://www.handspeak.com" + video_url,
+					meaning = mean,
+					icon = "https://www.handspeak.com/favicon.ico"
 				)
 	return searchErr
 

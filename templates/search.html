@@ -1,12 +1,16 @@
-<html><head>
-	<title>{{ website }} search results</title>
-	<meta name="twitter:card" content="player">
-	<meta name="twitter:title" content="{{ sign }}">
-	<meta name="twitter:description" content="[{{ website }}]({{ url }}) search results">
-	<meta name="twitter:player" content="{{ video }}">
-	<link rel="icon" href="{{ icon }}">
-</head><body>
+<html>
+	<head>
+		<title>{{ website }} search results</title>
+		<meta name="twitter:card" content="player">
+		<meta name="twitter:title" content="{{ sign }}">
+		<meta name="twitter:description" content="[{{ website }}]({{ url }}) search results">
+		<meta name="twitter:player" content="{{ video }}">
+		<link rel="icon" href="{{ icon }}">
+	</head>
+	<body>
 	<h1><a href="{{ url }}">{{ sign }}</a></h1>
+	<br\>
+	<em>{{ meaning }}</em>
 	<video controls loop>
 		<source src="{{ video }}" type="video/mp4">
 	</video>
