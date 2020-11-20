@@ -188,7 +188,7 @@ async def search_sign(
 			url = source["src"]
 			desc = result.find(class_ = "desc-active")
 			if desc is not None:
-				mean = desc.find("em").text
+				mean = desc.find("em").text if desc.find("em") else ""
 				return searchTemplate.render(
 					website = "SignSavvy",
 					url = page,
@@ -198,6 +198,7 @@ async def search_sign(
 					icon = "https://www.signingsavvy.com/favicon.ico"
 				)
 	elif website == SITES.handspeak:
+		"""
 		firstPage = fr"https://www.handspeak.com/word/search/app/app-dictionary.php"
 		firstResult = BeautifulSoup(
 			await textPOST(firstPage, {"query": query}),
@@ -222,6 +223,7 @@ async def search_sign(
 					meaning = mean,
 					icon = "https://www.handspeak.com/favicon.ico"
 				)
+		"""
 	return searchErr
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
