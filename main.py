@@ -1,9 +1,12 @@
 import httpx
+import urllib
 from typing import List, Optional
 from fastapi import FastAPI, Path, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import *
 from jinja2 import Environment, FileSystemLoader
+from bs4 import BeautifulSoup
+from enum import Enum
 
 app = FastAPI(
 	title = "Roblox Endpoint",
@@ -30,7 +33,6 @@ file_loader = FileSystemLoader("templates")
 env = Environment(loader=file_loader)
 
 template = env.get_template("serverHTML.html")
-searchTemplate = env.get_template("search.html")
 
 def sweatCount(server, sweats: [int]):
 	return sum(player in sweats for player in server['playerIds'])
@@ -140,5 +142,49 @@ async def server_data(
 			placeId,
 			voteRatio
 		)
+		
+def escape_string(string: str):
+	return string.replace("'", r"\'").replace('"',r'\"')
+
+searchErr = r"""
+<html><head></head><body>no sign was found</body></html>
+"""
+
+SITES = enum("SITES", "handspeak signsavvy")
+searchTemplate = env.get_template("search.html")
+@app.get("/sign/{website}", response_class = HTMLResponse)
+async def search_sign(
+		website: SITES = Path(
+			SITES.signsavvy,
+			title = "Site",
+			description = "The website to search",
+			example = SITES.signsavvy
+		),
+		query: str = Query(
+			"hello",
+			title = "Query",
+			description = "Search term",
+			example = "hello"
+		)
+	):
+	if website == SITES.signsavvy:
+		page = fr"https://www.signingsavvy.com/search/{urllib.parse(query)}"
+		result = BeautifulSoup(
+			textGET(page),
+			'html.parser'
+		)
+		source = result.find("source")
+		if source is not None:
+			url = source["src"]
+			desc = result.find(class_ = "desc-active")
+			if desc is not None:
+				mean = desc.find("em").text
+				return searchTemplate.render(
+					website = "SignSavvy",
+					url = page,
+					sign = escape_string(query).upper(),
+					video = url
+				)
+	return searchErr
 
 app.mount("/", StaticFiles(directory="public_html"), name="static")
