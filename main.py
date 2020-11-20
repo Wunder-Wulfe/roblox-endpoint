@@ -177,7 +177,7 @@ async def search_sign(
 	if website == SITES.signsavvy:
 		page = fr"https://www.signingsavvy.com/search/{escape_query(query)}"
 		result = BeautifulSoup(
-			textGET(page),
+			await textGET(page),
 			'html.parser'
 		)
 		source = result.find("source")
