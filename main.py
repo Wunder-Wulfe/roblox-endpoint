@@ -154,7 +154,9 @@ searchErr = r"""
 <html><head></head><body>no sign was found</body></html>
 """
 
-SITES = enum("SITES", "handspeak signsavvy")
+class SITES(str, Enum):
+    signsavvy = "signsavvy"
+    handspeak = "handspeak"
 searchTemplate = env.get_template("search.html")
 @app.get("/sign/{website}", response_class = HTMLResponse)
 async def search_sign(
