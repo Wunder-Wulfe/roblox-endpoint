@@ -30,6 +30,7 @@ file_loader = FileSystemLoader("templates")
 env = Environment(loader=file_loader)
 
 template = env.get_template("serverHTML.html")
+searchTemplate = env.get_template("search.html")
 
 def sweatCount(server, sweats: [int]):
 	return sum(player in sweats for player in server['playerIds'])
