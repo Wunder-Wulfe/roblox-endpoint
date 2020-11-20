@@ -5,7 +5,6 @@ django-heroku
 httpx
 aiofiles
 fastapi
-enum
 beautifulsoup4
 urllib
 jinja2
