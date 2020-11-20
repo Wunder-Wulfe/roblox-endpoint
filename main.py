@@ -149,7 +149,7 @@ async def server_data(
 def escape_string(string: str):
 	return string.replace("'", r"\'").replace('"',r'\"')
 def encode_hex(string: str):
-	return "%%%02X" % string.group(0)
+	return "%%%02X" % ord(string.group(0))
 def escape_query(string: str):
 	return re.sub(r"\W", encode_hex, string)
 
