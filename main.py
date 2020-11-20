@@ -1,5 +1,6 @@
 import httpx
 import urllib
+import html
 import re
 from typing import List, Optional
 from fastapi import FastAPI, Path, Query
@@ -194,7 +195,7 @@ async def search_sign(
 					url = page,
 					sign = escape_string(query).upper(),
 					video = "https://www.signingsavvy.com/" + url,
-					meaning = escape_string(mean),
+					meaning = html.escape(mean),
 					icon = "https://www.signingsavvy.com/favicon.ico"
 				)
 	elif website == SITES.handspeak:
