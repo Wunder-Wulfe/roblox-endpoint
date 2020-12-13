@@ -39,7 +39,7 @@ env = Environment(loader=file_loader)
 template = env.get_template("serverHTML.html")
 
 def sweatCount(server, sweats: [int]):
-	return sum(player in sweats for player in server['playerIds'])
+	return 0 #sum(player in sweats for player in server['playerIds'])
 
 def rating(voteR):
 	if voteR < 0.31:
